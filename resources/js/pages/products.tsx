@@ -63,7 +63,7 @@ function PaginationControls({ products }: { products: PaginatedProducts }) {
     const pageLinks = products.links.filter((link) => !link.label.includes('Previous') && !link.label.includes('Next'));
 
     return (
-        <div className="flex items-center justify-between px-4 py-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-4">
             <div className="text-sm text-muted-foreground flex-shrink-0">
                 Showing {products.from} to {products.to} of {products.total} results
             </div>
