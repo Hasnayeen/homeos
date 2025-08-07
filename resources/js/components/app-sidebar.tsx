@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/sidebar';
 import { type NavGroup, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Archive, BookOpen, Calculator, Folder, LayoutGrid, Package, Wallet } from 'lucide-react';
+import { Archive, BookOpen, Calculator, ArrowRightLeft, Folder, LayoutGrid, Package, Wallet } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const dashboardNavItem: NavItem = {
@@ -50,22 +50,16 @@ const navGroups: NavGroup[] = [
                 href: '/budgets',
                 icon: Calculator,
             },
+            {
+                title: 'Transactions',
+                href: '/transactions',
+                icon: ArrowRightLeft,
+            },
         ],
     },
 ];
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+const footerNavItems: NavItem[] = [];
 
 function NavGroups({ groups }: { groups: NavGroup[] }) {
     const page = usePage();
