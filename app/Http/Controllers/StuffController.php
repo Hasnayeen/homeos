@@ -17,7 +17,7 @@ class StuffController extends Controller
         return Inertia::render('stuff', [
             'stuff' => Stuff::with('storage')
                 ->orderBy('name')
-                ->paginate(15)
+                ->paginate(15),
         ]);
     }
 
@@ -27,7 +27,7 @@ class StuffController extends Controller
     public function create()
     {
         return Inertia::render('stuff/create', [
-            'storages' => Storage::orderBy('name')->get()
+            'storages' => Storage::orderBy('name')->get(),
         ]);
     }
 

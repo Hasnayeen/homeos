@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
     Pagination,
     PaginationContent,
@@ -12,7 +13,9 @@ import {
 } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface Product {
     id: number;
@@ -48,6 +51,9 @@ interface PaginatedProducts {
 
 interface ProductsProps {
     products: PaginatedProducts;
+    filters: {
+        search?: string;
+    };
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -63,8 +69,8 @@ function PaginationControls({ products }: { products: PaginatedProducts }) {
     const pageLinks = products.links.filter((link) => !link.label.includes('Previous') && !link.label.includes('Next'));
 
     return (
-        <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-4">
-            <div className="text-sm text-muted-foreground flex-shrink-0">
+        <div className="flex flex-col items-center justify-between px-4 py-4 lg:flex-row">
+            <div className="flex-shrink-0 text-sm text-muted-foreground">
                 Showing {products.from} to {products.to} of {products.total} results
             </div>
             <Pagination>
@@ -100,7 +106,29 @@ function PaginationControls({ products }: { products: PaginatedProducts }) {
     );
 }
 
-export default function Products({ products }: ProductsProps) {
+export default function Products({ products, filters }: ProductsProps) {
+    const [search, setSearch] = useState(filters.search || '');
+    const [isSearching, setIsSearching] = useState(false);
+
+    useEffect(() => {
+        const delayedSearch = setTimeout(() => {
+            if (search !== filters.search) {
+                setIsSearching(true);
+                router.get(
+                    '/products',
+                    { search },
+                    {
+                        preserveState: true,
+                        replace: true,
+                        onFinish: () => setIsSearching(false),
+                    },
+                );
+            }
+        }, 300);
+
+        return () => clearTimeout(delayedSearch);
+    }, [search, filters.search]);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Products" />
@@ -118,6 +146,22 @@ export default function Products({ products }: ProductsProps) {
                         </CardAction>
                     </CardHeader>
                     <CardContent className="p-0">
+                        <div className="border-b border-border p-4">
+                            <div className="relative max-w-md">
+                                <Input
+                                    type="text"
+                                    placeholder="Search products by name, description, or brand..."
+                                    value={search}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+                                    className="pr-10"
+                                />
+                                {isSearching && (
+                                    <div className="absolute top-1/2 right-3 -translate-y-1/2">
+                                        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         <div className="overflow-x-auto">
                             <table className="w-full border-collapse">
                                 <thead>

@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Tag;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
@@ -27,7 +26,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(5),
                 'last_purchase_price_cents' => 3.99, // $3.99
                 'brand' => 'Organic Valley',
-                'tags' => ['Dairy', 'Groceries']
+                'tags' => ['Dairy', 'Groceries'],
             ],
             [
                 'name' => 'Bread',
@@ -40,7 +39,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(3),
                 'last_purchase_price_cents' => 2.49, // $2.49
                 'brand' => 'Wonder',
-                'tags' => ['Groceries', 'Pantry']
+                'tags' => ['Groceries', 'Pantry'],
             ],
             [
                 'name' => 'Rice',
@@ -53,7 +52,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(15),
                 'last_purchase_price_cents' => 8.99, // $8.99
                 'brand' => 'Mahatma',
-                'tags' => ['Pantry', 'Groceries']
+                'tags' => ['Pantry', 'Groceries'],
             ],
             [
                 'name' => 'Chicken Breast',
@@ -66,7 +65,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(7),
                 'last_purchase_price_cents' => 12.99, // $12.99
                 'brand' => 'Perdue',
-                'tags' => ['Meat', 'Frozen', 'Groceries']
+                'tags' => ['Meat', 'Frozen', 'Groceries'],
             ],
             [
                 'name' => 'Toilet Paper',
@@ -79,7 +78,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(20),
                 'last_purchase_price_cents' => 15.99, // $15.99
                 'brand' => 'Charmin',
-                'tags' => ['Household', 'Personal Care']
+                'tags' => ['Household', 'Personal Care'],
             ],
             [
                 'name' => 'Apples',
@@ -92,7 +91,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(4),
                 'last_purchase_price_cents' => 4.99, // $4.99
                 'brand' => null,
-                'tags' => ['Produce', 'Groceries']
+                'tags' => ['Produce', 'Groceries'],
             ],
             [
                 'name' => 'Dish Soap',
@@ -105,7 +104,7 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(45),
                 'last_purchase_price_cents' => 3.49, // $3.49
                 'brand' => 'Dawn',
-                'tags' => ['Cleaning', 'Household', 'Low Stock']
+                'tags' => ['Cleaning', 'Household', 'Low Stock'],
             ],
             [
                 'name' => 'Coffee',
@@ -118,16 +117,16 @@ class ProductSeeder extends Seeder
                 'last_purchased_at' => Carbon::now()->subDays(12),
                 'last_purchase_price_cents' => 8.99, // $8.99
                 'brand' => 'Folgers',
-                'tags' => ['Beverages', 'Pantry', 'Groceries']
-            ]
+                'tags' => ['Beverages', 'Pantry', 'Groceries'],
+            ],
         ];
 
         foreach ($products as $productData) {
             $tags = $productData['tags'];
             unset($productData['tags']);
-            
+
             $product = Product::create($productData);
-            
+
             // Attach tags
             foreach ($tags as $tagName) {
                 $tag = Tag::where('name', $tagName)->first();

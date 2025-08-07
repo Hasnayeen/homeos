@@ -6,7 +6,7 @@ use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum TransactionType: string implements HasLabel, HasColor, HasIcon
+enum TransactionType: string implements HasColor, HasIcon, HasLabel
 {
     case INCOME = 'income';
     case EXPENSE = 'expense';
@@ -16,7 +16,7 @@ enum TransactionType: string implements HasLabel, HasColor, HasIcon
 
     public function getLabel(): string
     {
-        return match($this) {
+        return match ($this) {
             self::INCOME => 'Income',
             self::EXPENSE => 'Expense',
             self::TRANSFER => 'Transfer',
@@ -25,9 +25,9 @@ enum TransactionType: string implements HasLabel, HasColor, HasIcon
         };
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
-        return match($this) {
+        return match ($this) {
             self::INCOME => 'success',
             self::EXPENSE => 'danger',
             self::TRANSFER => 'info',
@@ -38,7 +38,7 @@ enum TransactionType: string implements HasLabel, HasColor, HasIcon
 
     public function getIcon(): ?string
     {
-        return match($this) {
+        return match ($this) {
             self::INCOME => 'heroicon-m-arrow-trending-up',
             self::EXPENSE => 'heroicon-m-arrow-trending-down',
             self::TRANSFER => 'heroicon-m-arrow-path',
@@ -50,7 +50,7 @@ enum TransactionType: string implements HasLabel, HasColor, HasIcon
     public static function getOptions(): array
     {
         return collect(self::cases())
-            ->mapWithKeys(fn(self $type) => [$type->value => $type->getLabel()])
+            ->mapWithKeys(fn (self $type) => [$type->value => $type->getLabel()])
             ->toArray();
     }
 }

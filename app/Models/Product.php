@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Casts\MoneyCast;
 
 class Product extends Model
 {
@@ -66,7 +65,7 @@ class Product extends Model
         if ($this->purchased_amount <= 0) {
             return 0;
         }
-        
+
         return ($this->current_amount / $this->purchased_amount) * 100;
     }
 
@@ -75,18 +74,18 @@ class Product extends Model
      */
     public function getConsumptionRate(): ?float
     {
-        if (!$this->last_purchased_at) {
+        if (! $this->last_purchased_at) {
             return null;
         }
 
         $daysSincePurchase = $this->last_purchased_at->diffInDays(now());
-        
+
         if ($daysSincePurchase <= 0) {
             return null;
         }
 
         $consumedAmount = $this->purchased_amount - $this->current_amount;
-        
+
         return $consumedAmount / $daysSincePurchase;
     }
 
@@ -96,13 +95,13 @@ class Product extends Model
     public function getDaysUntilThreshold(): ?int
     {
         $consumptionRate = $this->getConsumptionRate();
-        
-        if (!$consumptionRate || $consumptionRate <= 0) {
+
+        if (! $consumptionRate || $consumptionRate <= 0) {
             return null;
         }
 
         $amountAboveThreshold = $this->current_amount - $this->threshold_amount;
-        
+
         if ($amountAboveThreshold <= 0) {
             return 0; // Already at or below threshold
         }
@@ -116,7 +115,7 @@ class Product extends Model
     public function scopeNeedsRestock($query)
     {
         return $query->whereColumn('current_amount', '<=', 'threshold_amount')
-                    ->where('is_active', true);
+            ->where('is_active', true);
     }
 
     /**

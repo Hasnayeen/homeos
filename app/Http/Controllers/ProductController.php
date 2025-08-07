@@ -11,12 +11,23 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Product::active();
+
+        if ($search = $request->get('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
+                    ->orWhere('brand', 'like', '%'.$search.'%');
+            });
+        }
+
         return Inertia::render('products', [
-            'products' => Product::active()
-                ->orderBy('name')
-                ->paginate(15)
+            'products' => $query->orderBy('name')->paginate(15)->withQueryString(),
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 

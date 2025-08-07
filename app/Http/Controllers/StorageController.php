@@ -23,7 +23,7 @@ class StorageController extends Controller
         return response()->json([
             'success' => true,
             'storage' => $storage,
-            'message' => 'Storage created successfully.'
+            'message' => 'Storage created successfully.',
         ]);
     }
 }

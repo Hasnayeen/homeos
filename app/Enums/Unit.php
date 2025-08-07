@@ -6,7 +6,7 @@ use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum Unit: string implements HasLabel, HasColor, HasIcon
+enum Unit: string implements HasColor, HasIcon, HasLabel
 {
     case PIECE = 'piece';
     case PIECES = 'pieces';
@@ -24,7 +24,7 @@ enum Unit: string implements HasLabel, HasColor, HasIcon
     case TUBES = 'tubes';
     case ROLL = 'roll';
     case ROLLS = 'rolls';
-    
+
     // Weight units
     case GRAM = 'g';
     case GRAMS = 'grams';
@@ -34,7 +34,7 @@ enum Unit: string implements HasLabel, HasColor, HasIcon
     case POUNDS = 'pounds';
     case OUNCE = 'oz';
     case OUNCES = 'ounces';
-    
+
     // Volume units
     case MILLILITER = 'ml';
     case MILLILITERS = 'milliliters';
@@ -50,7 +50,7 @@ enum Unit: string implements HasLabel, HasColor, HasIcon
     case QUARTS = 'quarts';
     case GALLON = 'gallon';
     case GALLONS = 'gallons';
-    
+
     // Length units
     case METER = 'm';
     case METERS = 'meters';
@@ -60,7 +60,7 @@ enum Unit: string implements HasLabel, HasColor, HasIcon
     case FEET = 'feet';
     case INCH = 'in';
     case INCHES = 'inches';
-    
+
     // Common household units
     case TABLET = 'tablet';
     case TABLETS = 'tablets';
@@ -82,64 +82,64 @@ enum Unit: string implements HasLabel, HasColor, HasIcon
         return $this->value;
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
-        return match($this) {
+        return match ($this) {
             self::PIECE, self::PIECES, self::TABLET, self::TABLETS, self::CAPSULE, self::CAPSULES,
             self::DOSE, self::DOSES, self::SHEET, self::SHEETS, self::STICK, self::STICKS => 'primary',
-            
-            self::BOTTLE, self::BOTTLES, self::CAN, self::CANS, self::BOX, self::BOXES, 
-            self::PACK, self::PACKS, self::BAG, self::BAGS, self::TUBE, self::TUBES, 
+
+            self::BOTTLE, self::BOTTLES, self::CAN, self::CANS, self::BOX, self::BOXES,
+            self::PACK, self::PACKS, self::BAG, self::BAGS, self::TUBE, self::TUBES,
             self::ROLL, self::ROLLS => 'info',
-            
+
             self::GRAM, self::GRAMS, self::KILOGRAM, self::KILOGRAMS, self::POUND, self::POUNDS,
             self::OUNCE, self::OUNCES => 'warning',
-            
+
             self::MILLILITER, self::MILLILITERS, self::LITER, self::LITERS, self::FLUID_OUNCE,
             self::FLUID_OUNCES, self::CUP, self::CUPS, self::PINT, self::PINTS, self::QUART,
             self::QUARTS, self::GALLON, self::GALLONS => 'gray',
-            
+
             self::METER, self::METERS, self::CENTIMETER, self::CENTIMETERS, self::FOOT,
             self::FEET, self::INCH, self::INCHES => 'success',
-            
+
             self::PORTION, self::PORTIONS, self::SERVING, self::SERVINGS => 'danger',
         };
     }
 
     public function getIcon(): ?string
     {
-        return match($this) {
+        return match ($this) {
             self::PIECE, self::PIECES, self::TABLET, self::TABLETS, self::CAPSULE, self::CAPSULES,
             self::DOSE, self::DOSES, self::SHEET, self::SHEETS, self::STICK, self::STICKS => 'heroicon-m-squares-2x2',
-            
+
             self::BOTTLE, self::BOTTLES => 'heroicon-m-beaker',
             self::CAN, self::CANS => 'heroicon-m-circle-stack',
             self::BOX, self::BOXES => 'heroicon-m-cube',
             self::PACK, self::PACKS, self::BAG, self::BAGS => 'heroicon-m-archive-box',
             self::TUBE, self::TUBES => 'heroicon-m-minus',
             self::ROLL, self::ROLLS => 'heroicon-m-circle-stack',
-            
+
             self::GRAM, self::GRAMS, self::KILOGRAM, self::KILOGRAMS, self::POUND, self::POUNDS,
             self::OUNCE, self::OUNCES => 'heroicon-m-scale',
-            
+
             self::MILLILITER, self::MILLILITERS, self::LITER, self::LITERS, self::FLUID_OUNCE,
             self::FLUID_OUNCES, self::CUP, self::CUPS, self::PINT, self::PINTS, self::QUART,
             self::QUARTS, self::GALLON, self::GALLONS => 'heroicon-m-beaker',
-            
+
             self::METER, self::METERS, self::CENTIMETER, self::CENTIMETERS, self::FOOT,
             self::FEET, self::INCH, self::INCHES => 'heroicon-m-calculator',
-            
+
             self::PORTION, self::PORTIONS, self::SERVING, self::SERVINGS => 'heroicon-m-cake',
         };
     }
-    
+
     public static function getOptions(): array
     {
         return collect(self::cases())
-            ->mapWithKeys(fn(self $unit) => [$unit->value => $unit->value])
+            ->mapWithKeys(fn (self $unit) => [$unit->value => $unit->value])
             ->toArray();
     }
-    
+
     public static function getGroupedOptions(): array
     {
         return [
