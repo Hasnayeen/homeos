@@ -83,7 +83,7 @@ export default function ProductShow({ product }: ProductShowProps) {
                     <Button asChild>
                         <Link href={`/products/${product.id}/edit`}>
                             <Edit className="mr-2 h-4 w-4" />
-                            Edit Product
+                            Edit
                         </Link>
                     </Button>
                 </div>

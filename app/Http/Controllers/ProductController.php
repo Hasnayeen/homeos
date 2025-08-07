@@ -80,7 +80,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return Inertia::render('products/edit', [
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -88,7 +92,25 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'purchased_amount' => 'required|numeric|min:0',
+            'current_amount' => 'required|numeric|min:0',
+            'unit' => 'required|string|max:50',
+            'storage_location' => 'nullable|string|max:255',
+            'threshold_amount' => 'required|numeric|min:0',
+            'last_purchased_at' => 'nullable|date',
+            'last_purchase_price_cents' => 'nullable|integer|min:0',
+            'brand' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $product->update($validated);
+
+        return redirect()->route('products.show', $product->id)->with('success', 'Product updated successfully.');
     }
 
     /**
