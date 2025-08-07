@@ -1,16 +1,36 @@
 import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { type NavGroup, type NavItem } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, LayoutGrid, Package } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+const dashboardNavItem: NavItem = {
+    title: 'Dashboard',
+    href: '/',
+    icon: LayoutGrid,
+};
+
+const navGroups: NavGroup[] = [
     {
-        title: 'Dashboard',
-        href: '/',
-        icon: LayoutGrid,
+        title: 'Inventory',
+        items: [
+            {
+                title: 'Products',
+                href: '/products',
+                icon: Package,
+            },
+        ],
     },
 ];
 
@@ -26,6 +46,51 @@ const footerNavItems: NavItem[] = [
         icon: BookOpen,
     },
 ];
+
+function NavGroups({ groups }: { groups: NavGroup[] }) {
+    const page = usePage();
+
+    return (
+        <>
+            {groups.map((group) => (
+                <SidebarGroup key={group.title} className="px-2 py-0">
+                    <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {group.items.map((item) => (
+                            <SidebarMenuItem key={item.title}>
+                                <SidebarMenuButton asChild isActive={page.url.startsWith(item.href)} tooltip={{ children: item.title }}>
+                                    <Link href={item.href} prefetch>
+                                        {item.icon && <item.icon />}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+            ))}
+        </>
+    );
+}
+
+function SingleNavItem({ item }: { item: NavItem }) {
+    const page = usePage();
+
+    return (
+        <SidebarGroup className="px-2 py-0">
+            <SidebarMenu>
+                <SidebarMenuItem>
+                    <SidebarMenuButton asChild isActive={page.url === item.href} tooltip={{ children: item.title }}>
+                        <Link href={item.href} prefetch>
+                            {item.icon && <item.icon />}
+                            <span>{item.title}</span>
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarGroup>
+    );
+}
 
 export function AppSidebar() {
     return (
@@ -43,7 +108,8 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <SingleNavItem item={dashboardNavItem} />
+                <NavGroups groups={navGroups} />
             </SidebarContent>
 
             <SidebarFooter>

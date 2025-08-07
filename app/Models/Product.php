@@ -36,6 +36,12 @@ class Product extends Model
         'is_active' => 'boolean',
     ];
 
+    protected $appends = [
+        'last_purchase_price',
+        'last_purchased_date',
+        'percentage_remaining_rounded',
+    ];
+
     /**
      * Get the tags for this product.
      */
@@ -119,5 +125,29 @@ class Product extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Get the last purchase price in dollars.
+     */
+    public function getLastPurchasePriceAttribute(): ?float
+    {
+        return $this->last_purchase_price_cents ? ($this->last_purchase_price_cents / 100) : null;
+    }
+
+    /**
+     * Get the last purchased date formatted.
+     */
+    public function getLastPurchasedDateAttribute(): ?string
+    {
+        return $this->last_purchased_at?->format('Y-m-d');
+    }
+
+    /**
+     * Get the percentage remaining rounded to 1 decimal.
+     */
+    public function getPercentageRemainingRoundedAttribute(): float
+    {
+        return round($this->getPercentageRemaining(), 1);
     }
 }

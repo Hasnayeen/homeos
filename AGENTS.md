@@ -1,5 +1,7 @@
 # AGENTS.md - HomeOS Development Guide
 
+- Use context7 mcp server for framework/library documentation and examples
+
 ## Build/Lint/Test Commands
 
 - **PHP Tests**: `composer test` or `php artisan test` (runs Pest test suite)
@@ -21,3 +23,4 @@
 - **Naming**: PascalCase for components/classes, camelCase for functions/variables, kebab-case for files
 - **Error Handling**: Use ValidationException for validation, try/catch for external calls
 - **File Structure**: Follow Laravel conventions (app/, resources/js/, tests/)
+- **Navigation**: **ALWAYS** use Inertia `Link` component from `@inertiajs/react` for internal navigation instead of regular `<a>` tags or HTML links. This maintains SPA behavior and preserves application state.
