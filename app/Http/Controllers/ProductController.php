@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('products/create');
     }
 
     /**
@@ -33,7 +33,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'purchased_amount' => 'required|numeric|min:0',
+            'current_amount' => 'required|numeric|min:0',
+            'unit' => 'required|string|max:50',
+            'storage_location' => 'nullable|string|max:255',
+            'threshold_amount' => 'required|numeric|min:0',
+            'last_purchased_at' => 'nullable|date',
+            'last_purchase_price_cents' => 'nullable|integer|min:0',
+            'brand' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $validated['is_active'] = true;
+
+        Product::create($validated);
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
     /**

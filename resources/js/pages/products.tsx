@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
     Pagination,
     PaginationContent,
@@ -11,7 +12,7 @@ import {
 } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 interface Product {
     id: number;
@@ -106,8 +107,15 @@ export default function Products({ products }: ProductsProps) {
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Products</CardTitle>
-                        <CardDescription>Manage your inventory and track product levels</CardDescription>
+                        <div className="flex flex-col gap-1.5">
+                            <CardTitle>Products</CardTitle>
+                            <CardDescription>Manage your inventory and track product levels</CardDescription>
+                        </div>
+                        <CardAction>
+                            <Button asChild>
+                                <Link href="/products/create">Create Product</Link>
+                            </Button>
+                        </CardAction>
                     </CardHeader>
                     <CardContent className="p-0">
                         <div className="overflow-x-auto">
