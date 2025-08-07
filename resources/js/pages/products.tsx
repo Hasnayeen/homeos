@@ -64,7 +64,7 @@ function PaginationControls({ products }: { products: PaginatedProducts }) {
 
     return (
         <div className="flex items-center justify-between px-4 py-4">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground flex-shrink-0">
                 Showing {products.from} to {products.to} of {products.total} results
             </div>
             <Pagination>
