@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Storage;
 use App\Models\Stuff;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -25,7 +26,9 @@ class StuffController extends Controller
      */
     public function create()
     {
-        return Inertia::render('stuff/create');
+        return Inertia::render('stuff/create', [
+            'storages' => Storage::orderBy('name')->get()
+        ]);
     }
 
     /**
