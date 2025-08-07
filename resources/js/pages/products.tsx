@@ -184,46 +184,50 @@ export default function Products({ products, filters }: ProductsProps) {
                                         </tr>
                                     ) : (
                                         products.data.map((product) => (
-                                            <tr key={product.id} className="border-b border-border last:border-b-0 hover:bg-muted/50">
-                                                <td className="p-4">
-                                                    <div>
-                                                        <div className="font-medium">{product.name}</div>
-                                                        {product.description && (
-                                                            <div className="text-sm text-muted-foreground">{product.description}</div>
-                                                        )}
-                                                    </div>
-                                                </td>
-                                                <td className="p-4">{product.brand || '-'}</td>
-                                                <td className="p-4">
-                                                    <div>
-                                                        <div className="font-medium">
-                                                            {product.current_amount} / {product.purchased_amount}
+                                            <tr key={product.id} className="cursor-pointer border-b border-border last:border-b-0 hover:bg-muted/50">
+                                                <Link href={`/products/${product.id}`} className="contents">
+                                                    <td className="p-4">
+                                                        <div>
+                                                            <div className="font-medium">{product.name}</div>
+                                                            {product.description && (
+                                                                <div className="text-sm text-muted-foreground">{product.description}</div>
+                                                            )}
                                                         </div>
-                                                        <div className="text-sm text-muted-foreground">
-                                                            {product.percentage_remaining_rounded}% remaining
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="p-4">{product.unit}</td>
-                                                <td className="p-4">
-                                                    {product.current_amount <= product.threshold_amount ? (
-                                                        <Badge variant="destructive">Restock Needed</Badge>
-                                                    ) : (
-                                                        <Badge variant="secondary">In Stock</Badge>
-                                                    )}
-                                                </td>
-                                                <td className="p-4">{product.storage_location || '-'}</td>
-                                                <td className="p-4">
-                                                    <div>
-                                                        {product.last_purchased_date && <div className="text-sm">{product.last_purchased_date}</div>}
-                                                        {product.last_purchase_price && (
-                                                            <div className="text-sm text-muted-foreground">
-                                                                ${product.last_purchase_price.toFixed(2)}
+                                                    </td>
+                                                    <td className="p-4">{product.brand || '-'}</td>
+                                                    <td className="p-4">
+                                                        <div>
+                                                            <div className="font-medium">
+                                                                {product.current_amount} / {product.purchased_amount}
                                                             </div>
+                                                            <div className="text-sm text-muted-foreground">
+                                                                {product.percentage_remaining_rounded}% remaining
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="p-4">{product.unit}</td>
+                                                    <td className="p-4">
+                                                        {product.current_amount <= product.threshold_amount ? (
+                                                            <Badge variant="destructive">Restock Needed</Badge>
+                                                        ) : (
+                                                            <Badge variant="secondary">In Stock</Badge>
                                                         )}
-                                                        {!product.last_purchased_date && !product.last_purchase_price && '-'}
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                    <td className="p-4">{product.storage_location || '-'}</td>
+                                                    <td className="p-4">
+                                                        <div>
+                                                            {product.last_purchased_date && (
+                                                                <div className="text-sm">{product.last_purchased_date}</div>
+                                                            )}
+                                                            {product.last_purchase_price && (
+                                                                <div className="text-sm text-muted-foreground">
+                                                                    ${product.last_purchase_price.toFixed(2)}
+                                                                </div>
+                                                            )}
+                                                            {!product.last_purchased_date && !product.last_purchase_price && '-'}
+                                                        </div>
+                                                    </td>
+                                                </Link>
                                             </tr>
                                         ))
                                     )}
