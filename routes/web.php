@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StuffController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,3 +10,4 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::resource('/products', ProductController::class)->names('products');
+Route::resource('/stuff', StuffController::class)->names('stuff');

@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/sidebar';
 import { type NavGroup, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Package } from 'lucide-react';
+import { Archive, BookOpen, Folder, LayoutGrid, Package } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const dashboardNavItem: NavItem = {
@@ -29,6 +29,11 @@ const navGroups: NavGroup[] = [
                 title: 'Products',
                 href: '/products',
                 icon: Package,
+            },
+            {
+                title: 'Stuff',
+                href: '/stuff',
+                icon: Archive,
             },
         ],
     },
