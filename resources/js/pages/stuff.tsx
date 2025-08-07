@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
     Pagination,
     PaginationContent,
@@ -11,7 +12,9 @@ import {
 } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface Storage {
     id: number;
@@ -44,6 +47,9 @@ interface PaginatedStuff {
 
 interface StuffProps {
     stuff: PaginatedStuff;
+    filters: {
+        search?: string;
+    };
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -96,7 +102,28 @@ function PaginationControls({ stuff }: { stuff: PaginatedStuff }) {
     );
 }
 
-export default function Stuff({ stuff }: StuffProps) {
+export default function Stuff({ stuff, filters }: StuffProps) {
+    const [search, setSearch] = useState(filters.search || '');
+    const [isSearching, setIsSearching] = useState(false);
+
+    useEffect(() => {
+        const delayedSearch = setTimeout(() => {
+            if (search !== filters.search) {
+                setIsSearching(true);
+                router.get(
+                    '/stuff',
+                    { search },
+                    {
+                        preserveState: true,
+                        replace: true,
+                        onFinish: () => setIsSearching(false),
+                    },
+                );
+            }
+        }, 300);
+
+        return () => clearTimeout(delayedSearch);
+    }, [search, filters.search]);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Stuff" />
@@ -114,6 +141,22 @@ export default function Stuff({ stuff }: StuffProps) {
                         </CardAction>
                     </CardHeader>
                     <CardContent className="p-0">
+                        <div className="border-b border-border p-4">
+                            <div className="relative max-w-md">
+                                <Input
+                                    type="text"
+                                    placeholder="Search stuff by name or storage location..."
+                                    value={search}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+                                    className="pr-10"
+                                />
+                                {isSearching && (
+                                    <div className="absolute top-1/2 right-3 -translate-y-1/2">
+                                        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         <div className="overflow-x-auto">
                             <table className="w-full border-collapse">
                                 <thead>
