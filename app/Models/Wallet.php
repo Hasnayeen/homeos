@@ -37,4 +37,12 @@ class Wallet extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    /**
+     * Scope to get active wallets.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }
