@@ -185,17 +185,23 @@ export default function Products({ products, filters }: ProductsProps) {
                                     ) : (
                                         products.data.map((product) => (
                                             <tr key={product.id} className="cursor-pointer border-b border-border last:border-b-0 hover:bg-muted/50">
-                                                <Link href={`/products/${product.id}`} className="contents">
-                                                    <td className="p-4">
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
                                                         <div>
                                                             <div className="font-medium">{product.name}</div>
                                                             {product.description && (
                                                                 <div className="text-sm text-muted-foreground">{product.description}</div>
                                                             )}
                                                         </div>
-                                                    </td>
-                                                    <td className="p-4">{product.brand || '-'}</td>
-                                                    <td className="p-4">
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
+                                                        {product.brand || '-'}
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
                                                         <div>
                                                             <div className="font-medium">
                                                                 {product.current_amount} / {product.purchased_amount}
@@ -204,17 +210,29 @@ export default function Products({ products, filters }: ProductsProps) {
                                                                 {product.percentage_remaining_rounded}% remaining
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                    <td className="p-4">{product.unit}</td>
-                                                    <td className="p-4">
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
+                                                        {product.unit}
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
                                                         {product.current_amount <= product.threshold_amount ? (
                                                             <Badge variant="destructive">Restock Needed</Badge>
                                                         ) : (
                                                             <Badge variant="secondary">In Stock</Badge>
                                                         )}
-                                                    </td>
-                                                    <td className="p-4">{product.storage_location || '-'}</td>
-                                                    <td className="p-4">
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
+                                                        {product.storage_location || '-'}
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/products/${product.id}`} className="block">
                                                         <div>
                                                             {product.last_purchased_date && (
                                                                 <div className="text-sm">{product.last_purchased_date}</div>
@@ -226,8 +244,8 @@ export default function Products({ products, filters }: ProductsProps) {
                                                             )}
                                                             {!product.last_purchased_date && !product.last_purchase_price && '-'}
                                                         </div>
-                                                    </td>
-                                                </Link>
+                                                    </Link>
+                                                </td>
                                             </tr>
                                         ))
                                     )}

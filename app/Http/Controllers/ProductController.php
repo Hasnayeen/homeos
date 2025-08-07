@@ -80,10 +80,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
-
         return Inertia::render('products/edit', [
-            'product' => $product,
+            'product' => Product::findOrFail($id),
         ]);
     }
 

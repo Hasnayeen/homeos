@@ -51,7 +51,9 @@ class StuffController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Inertia::render('stuff/show', [
+            'stuff' => Stuff::with('storage')->findOrFail($id),
+        ]);
     }
 
     /**
@@ -59,7 +61,10 @@ class StuffController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return Inertia::render('stuff/edit', [
+            'stuff' => Stuff::with('storage')->findOrFail($id),
+            'storages' => Storage::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -67,7 +72,16 @@ class StuffController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $stuff = Stuff::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'storage_id' => 'nullable|exists:storages,id',
+        ]);
+
+        $stuff->update($validated);
+
+        return redirect()->route('stuff.show', $stuff->id)->with('success', 'Stuff updated successfully.');
     }
 
     /**

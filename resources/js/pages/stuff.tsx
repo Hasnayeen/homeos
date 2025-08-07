@@ -60,7 +60,7 @@ function PaginationControls({ stuff }: { stuff: PaginatedStuff }) {
 
     return (
         <div className="flex items-center justify-between px-4 py-4">
-            <div className="text-sm text-muted-foreground flex-shrink-0">
+            <div className="flex-shrink-0 text-sm text-muted-foreground">
                 Showing {stuff.from} to {stuff.to} of {stuff.total} results
             </div>
             <Pagination>
@@ -132,15 +132,23 @@ export default function Stuff({ stuff }: StuffProps) {
                                         </tr>
                                     ) : (
                                         stuff.data.map((item) => (
-                                            <tr key={item.id} className="border-b border-border last:border-b-0 hover:bg-muted/50">
+                                            <tr key={item.id} className="cursor-pointer border-b border-border last:border-b-0 hover:bg-muted/50">
                                                 <td className="p-4">
-                                                    <div className="font-medium">{item.name}</div>
+                                                    <Link href={`/stuff/${item.id}`} className="block">
+                                                        <div className="font-medium">{item.name}</div>
+                                                    </Link>
                                                 </td>
-                                                <td className="p-4">{item.storage ? item.storage.name : '-'}</td>
                                                 <td className="p-4">
-                                                    <div className="text-sm text-muted-foreground">
-                                                        {new Date(item.created_at).toLocaleDateString()}
-                                                    </div>
+                                                    <Link href={`/stuff/${item.id}`} className="block">
+                                                        {item.storage ? item.storage.name : '-'}
+                                                    </Link>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Link href={`/stuff/${item.id}`} className="block">
+                                                        <div className="text-sm text-muted-foreground">
+                                                            {new Date(item.created_at).toLocaleDateString()}
+                                                        </div>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))
