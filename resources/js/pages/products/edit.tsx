@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -23,6 +24,7 @@ interface Product {
 
 interface EditProductProps {
     product: Product;
+    unitOptions: Record<string, Record<string, string>>;
 }
 
 function formatDateForInput(dateString: string | null): string {
@@ -35,7 +37,7 @@ function formatPriceForInput(cents: number | null): string {
     return (cents / 100).toFixed(2);
 }
 
-export default function EditProduct({ product }: EditProductProps) {
+export default function EditProduct({ product, unitOptions }: EditProductProps) {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Products',
@@ -155,15 +157,23 @@ export default function EditProduct({ product }: EditProductProps) {
 
                                 <div className="space-y-2">
                                     <Label htmlFor="unit">Unit *</Label>
-                                    <Input
-                                        id="unit"
-                                        type="text"
-                                        value={data.unit}
-                                        onChange={(e) => setData('unit', e.target.value)}
-                                        className={errors.unit ? 'border-destructive' : ''}
-                                        placeholder="e.g., kg, liters, pieces"
-                                        required
-                                    />
+                                    <Select value={data.unit} onValueChange={(value) => setData('unit', value)}>
+                                        <SelectTrigger className={errors.unit ? 'border-destructive' : ''}>
+                                            <SelectValue placeholder="Select a unit" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {Object.entries(unitOptions).map(([groupName, options]) => (
+                                                <SelectGroup key={groupName}>
+                                                    <SelectLabel>{groupName}</SelectLabel>
+                                                    {Object.entries(options).map(([value, label]) => (
+                                                        <SelectItem key={value} value={value}>
+                                                            {label}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectGroup>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                     {errors.unit && <div className="text-sm text-destructive">{errors.unit}</div>}
                                 </div>
 

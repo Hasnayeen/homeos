@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Unit;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -36,7 +37,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('products/create');
+        return Inertia::render('products/create', [
+            'unitOptions' => Unit::getGroupedOptions(),
+        ]);
     }
 
     /**
@@ -82,6 +85,7 @@ class ProductController extends Controller
     {
         return Inertia::render('products/edit', [
             'product' => Product::findOrFail($id),
+            'unitOptions' => Unit::getGroupedOptions(),
         ]);
     }
 

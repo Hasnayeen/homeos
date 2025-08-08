@@ -2,11 +2,7 @@
 
 namespace App\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasIcon;
-use Filament\Support\Contracts\HasLabel;
-
-enum Unit: string implements HasColor, HasIcon, HasLabel
+enum Unit: string
 {
     case PIECE = 'piece';
     case PIECES = 'pieces';
@@ -79,7 +75,7 @@ enum Unit: string implements HasColor, HasIcon, HasLabel
 
     public function getLabel(): string
     {
-        return $this->value;
+        return str($this->value)->title();
     }
 
     public function getColor(): string|array|null
@@ -144,76 +140,76 @@ enum Unit: string implements HasColor, HasIcon, HasLabel
     {
         return [
             'Count' => [
-                self::PIECE->value => self::PIECE->value,
-                self::PIECES->value => self::PIECES->value,
-                self::TABLET->value => self::TABLET->value,
-                self::TABLETS->value => self::TABLETS->value,
-                self::CAPSULE->value => self::CAPSULE->value,
-                self::CAPSULES->value => self::CAPSULES->value,
-                self::DOSE->value => self::DOSE->value,
-                self::DOSES->value => self::DOSES->value,
-                self::SHEET->value => self::SHEET->value,
-                self::SHEETS->value => self::SHEETS->value,
-                self::STICK->value => self::STICK->value,
-                self::STICKS->value => self::STICKS->value,
+                self::PIECE->value => self::PIECE->getLabel(),
+                self::PIECES->value => self::PIECES->getLabel(),
+                self::TABLET->value => self::TABLET->getLabel(),
+                self::TABLETS->value => self::TABLETS->getLabel(),
+                self::CAPSULE->value => self::CAPSULE->getLabel(),
+                self::CAPSULES->value => self::CAPSULES->getLabel(),
+                self::DOSE->value => self::DOSE->getLabel(),
+                self::DOSES->value => self::DOSES->getLabel(),
+                self::SHEET->value => self::SHEET->getLabel(),
+                self::SHEETS->value => self::SHEETS->getLabel(),
+                self::STICK->value => self::STICK->getLabel(),
+                self::STICKS->value => self::STICKS->getLabel(),
             ],
             'Containers' => [
-                self::BOTTLE->value => self::BOTTLE->value,
-                self::BOTTLES->value => self::BOTTLES->value,
-                self::CAN->value => self::CAN->value,
-                self::CANS->value => self::CANS->value,
-                self::BOX->value => self::BOX->value,
-                self::BOXES->value => self::BOXES->value,
-                self::PACK->value => self::PACK->value,
-                self::PACKS->value => self::PACKS->value,
-                self::BAG->value => self::BAG->value,
-                self::BAGS->value => self::BAGS->value,
-                self::TUBE->value => self::TUBE->value,
-                self::TUBES->value => self::TUBES->value,
-                self::ROLL->value => self::ROLL->value,
-                self::ROLLS->value => self::ROLLS->value,
+                self::BOTTLE->value => self::BOTTLE->getLabel(),
+                self::BOTTLES->value => self::BOTTLES->getLabel(),
+                self::CAN->value => self::CAN->getLabel(),
+                self::CANS->value => self::CANS->getLabel(),
+                self::BOX->value => self::BOX->getLabel(),
+                self::BOXES->value => self::BOXES->getLabel(),
+                self::PACK->value => self::PACK->getLabel(),
+                self::PACKS->value => self::PACKS->getLabel(),
+                self::BAG->value => self::BAG->getLabel(),
+                self::BAGS->value => self::BAGS->getLabel(),
+                self::TUBE->value => self::TUBE->getLabel(),
+                self::TUBES->value => self::TUBES->getLabel(),
+                self::ROLL->value => self::ROLL->getLabel(),
+                self::ROLLS->value => self::ROLLS->getLabel(),
             ],
             'Weight' => [
-                self::GRAM->value => self::GRAM->value,
-                self::GRAMS->value => self::GRAMS->value,
-                self::KILOGRAM->value => self::KILOGRAM->value,
-                self::KILOGRAMS->value => self::KILOGRAMS->value,
-                self::POUND->value => self::POUND->value,
-                self::POUNDS->value => self::POUNDS->value,
-                self::OUNCE->value => self::OUNCE->value,
-                self::OUNCES->value => self::OUNCES->value,
+                self::GRAM->value => self::GRAM->getLabel(),
+                self::GRAMS->value => self::GRAMS->getLabel(),
+                self::KILOGRAM->value => self::KILOGRAM->getLabel(),
+                self::KILOGRAMS->value => self::KILOGRAMS->getLabel(),
+                self::POUND->value => self::POUND->getLabel(),
+                self::POUNDS->value => self::POUNDS->getLabel(),
+                self::OUNCE->value => self::OUNCE->getLabel(),
+                self::OUNCES->value => self::OUNCES->getLabel(),
             ],
             'Volume' => [
-                self::MILLILITER->value => self::MILLILITER->value,
-                self::MILLILITERS->value => self::MILLILITERS->value,
-                self::LITER->value => self::LITER->value,
-                self::LITERS->value => self::LITERS->value,
-                self::FLUID_OUNCE->value => self::FLUID_OUNCE->value,
-                self::FLUID_OUNCES->value => self::FLUID_OUNCES->value,
-                self::CUP->value => self::CUP->value,
-                self::CUPS->value => self::CUPS->value,
-                self::PINT->value => self::PINT->value,
-                self::PINTS->value => self::PINTS->value,
-                self::QUART->value => self::QUART->value,
-                self::QUARTS->value => self::QUARTS->value,
-                self::GALLON->value => self::GALLON->value,
-                self::GALLONS->value => self::GALLONS->value,
+                self::MILLILITER->value => self::MILLILITER->getLabel(),
+                self::MILLILITERS->value => self::MILLILITERS->getLabel(),
+                self::LITER->value => self::LITER->getLabel(),
+                self::LITERS->value => self::LITERS->getLabel(),
+                self::FLUID_OUNCE->value => self::FLUID_OUNCE->getLabel(),
+                self::FLUID_OUNCES->value => self::FLUID_OUNCES->getLabel(),
+                self::CUP->value => self::CUP->getLabel(),
+                self::CUPS->value => self::CUPS->getLabel(),
+                self::PINT->value => self::PINT->getLabel(),
+                self::PINTS->value => self::PINTS->getLabel(),
+                self::QUART->value => self::QUART->getLabel(),
+                self::QUARTS->value => self::QUARTS->getLabel(),
+                self::GALLON->value => self::GALLON->getLabel(),
+                self::GALLONS->value => self::GALLONS->getLabel(),
             ],
             'Length' => [
-                self::METER->value => self::METER->value,
-                self::METERS->value => self::METERS->value,
-                self::CENTIMETER->value => self::CENTIMETER->value,
-                self::CENTIMETERS->value => self::CENTIMETERS->value,
-                self::FOOT->value => self::FOOT->value,
-                self::FEET->value => self::FEET->value,
-                self::INCH->value => self::INCH->value,
-                self::INCHES->value => self::INCHES->value,
+                self::METER->value => self::METER->getLabel(),
+                self::METERS->value => self::METERS->getLabel(),
+                self::CENTIMETER->value => self::CENTIMETER->getLabel(),
+                self::CENTIMETERS->value => self::CENTIMETERS->getLabel(),
+                self::FOOT->value => self::FOOT->getLabel(),
+                self::FEET->value => self::FEET->getLabel(),
+                self::INCH->value => self::INCH->getLabel(),
+                self::INCHES->value => self::INCHES->getLabel(),
             ],
             'Food & Portions' => [
-                self::PORTION->value => self::PORTION->value,
-                self::PORTIONS->value => self::PORTIONS->value,
-                self::SERVING->value => self::SERVING->value,
-                self::SERVINGS->value => self::SERVINGS->value,
+                self::PORTION->value => self::PORTION->getLabel(),
+                self::PORTIONS->value => self::PORTIONS->getLabel(),
+                self::SERVING->value => self::SERVING->getLabel(),
+                self::SERVINGS->value => self::SERVINGS->getLabel(),
             ],
         ];
     }
